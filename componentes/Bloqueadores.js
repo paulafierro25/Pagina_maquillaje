@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native'
 export default function Lista() {
  return (
  <View style={estilos.seccion}>
- <Text style={estilos.titulo}>Soy la lista</Text>
+ <Text style={estilos.titulo}>Soy el carrito </Text>
  <Text>Aquí se verán todos los productos agregados</Text>
  </View>
  )
