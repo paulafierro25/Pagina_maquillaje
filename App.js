@@ -1,28 +1,34 @@
-// App.js — el componente principal que reúne todo
-import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, ScrollView, SafeAreaView } from 'react-native'
-import Inicio from './componentes/Inicio'
-import Maquillaje from './componentes/Maquillaje'
-import Bloqueadores from './componentes/Bloqueadores'
-import CuidadoFacial from './componentes/CuidadoFacial'
-import MisCombinaciones from './componentes/MisCombinaciones'
+// App.js — lógica de favoritos
+import { useState } from 'react'
+import { SafeAreaView, StyleSheet } from 'react-native'
+import { PRODUCTOS } from './datos/productos'
+import Encabezado      from './componentes/Encabezado'
+import BarraCategorias from './componentes/BarraCategorias'
+import Catalogo        from './componentes/Catalogo'
+
 export default function App() {
- return (
- <SafeAreaView style={estilos.app}>
- <ScrollView>
- <Inicio />
- <Maquillaje />
- <Bloqueadores />
- <CuidadoFacial />
- <MisCombinaciones />
- </ScrollView>
- <StatusBar style="light" />
- </SafeAreaView>
- )
+  // Array con los IDs de productos favoritos
+  const [favoritos, setFavoritos] = useState([])
+
+  // Agrega el id si no estaba; lo quita si ya estaba
+  const toggleFavorito = (id) => {
+    setFavoritos(prev =>
+      prev.includes(id)
+        ? prev.filter(fav => fav !== id)   // quitar
+        : [...prev, id]                    // agregar
+    )
+  }
+
+  return (
+    <SafeAreaView style={estilos.app}>
+      <Encabezado titulo="GlowApp" cantFavoritos={favoritos.length} />
+      <BarraCategorias />
+      <Catalogo
+        productos={PRODUCTOS}
+        favoritos={favoritos}
+        onToggleFavorito={toggleFavorito}
+      />
+    </SafeAreaView>
+  )
 }
-const estilos = StyleSheet.create({
- app: {
- flex: 1,
- backgroundColor: '#fff',
- },
-})
+const estilos = StyleSheet.create({ app: { flex:1, backgroundColor:'#F9F3F4' } })
